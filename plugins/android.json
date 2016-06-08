@@ -27,6 +27,9 @@
         },
         "de.appplant.cordova.plugin.local-notification": {
             "PACKAGE_NAME": "com.ionicframework.readmoodle490747"
+        },
+        "cordova-sqlite-storage": {
+            "PACKAGE_NAME": "com.ionicframework.readmoodle490747"
         }
     },
     "dependent_plugins": {
