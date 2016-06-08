@@ -2,7 +2,11 @@
   <ion-content class="has-header" padding="true" ng-controller="ExampleController">
     <form class="list " id="login-form1">
       <ion-list class=" " id="login-list3">
-        <label id="login-input1" class="item item-input ">
+        <!-- <label id="login-input1" class="item item-input ">
+          <span class="input-label">Username</span>
+          <input placeholder="" type="text">
+        </label> -->
+        <label id="login-input2" class="item item-input ">
           <span class="input-label">Username</span>
           <input placeholder="" type="text">
         </label>
@@ -14,7 +18,7 @@
       <div style="height: 40px;" class="spacer"></div>
       <!-- <a class=" button button-stable  button-block " id="login-button1" ui-sref="menu.rEADMoodleAssistance">Log in</a>
       <a class=" button button-positive  button-block button-clear " id="login-button2" onclick="window.open('/signup', '_system', 'location=yes'); return false;" href="#">Or create an account</a> -->
-      <a class=" button button-stable  button-block " id="login-button1" ng-click="insert('Brian', 'Mendes')">Log in</a>
+      <a class=" button button-stable  button-block " id="login-button1" ng-click="insert(20,3,'Brian', 'Mendes')">Log in</a>
       <a class=" button button-stable  button-block " id="login-button1" ng-click="select('Mendes')">Log in 2</a>
 
       <ion-list>

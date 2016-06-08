@@ -47,23 +47,23 @@ angular.module('app.controllers', [])
 
 
 example.controller("ExampleController", function($scope, $cordovaSQLite, $ionicPlatform) {
-  $scope.insert = function(firstname, lastname) {
-    var query = "INSERT INTO people (firstname, lastname) VALUES (?,?)";
-    $cordovaSQLite.execute(db, query, [firstname, lastname]).then(function(res) {
+  $scope.insert = function(id,category,firstname, lastname) {
+    var query = "INSERT INTO course VALUES (?,?,?,?)";
+    $cordovaSQLite.execute(db, query, [id,category,firstname, lastname]).then(function(res) {
       $scope.myName = "Id is " + res.insertId;
     }, function(err) {
-      $scope.myName = "firstname Added3";
+      $scope.myName = err;
     });
 
   }
 
   $scope.select = function(lastname) {
     $scope.people = [];
-    var query = "SELECT firstname, lastname FROM people WHERE lastname = ?";
-    $cordovaSQLite.execute(db, query, [lastname]).then(function(res) {
+    var query = "SELECT fullname FROM course";
+    $cordovaSQLite.execute(db, query, []).then(function(res) {
       if (res.rows.length > 0) {
         for (var i = 0; i < res.rows.length; i++) {
-          $scope.people.push({firstname :res.rows.item(i).firstname});
+          $scope.people.push({firstname :res.rows.item(i).fullname});
         }
       } else {
         console.log("No results found");

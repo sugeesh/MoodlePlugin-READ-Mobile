@@ -11,22 +11,35 @@ var db;
 var example = angular.module('app', ['ionic', 'app.controllers', 'app.routes', 'app.services', 'app.directives', 'ngCordova'])
 
 .run(function($ionicPlatform, $cordovaSQLite) {
-  $ionicPlatform.ready(function() {
-    // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
-    // for form inputs)
-    db = $cordovaSQLite.openDB({name: "my.db", location: 1});
-    $cordovaSQLite.execute(db, "CREATE TABLE IF NOT EXISTS people (id integer primary key, firstname text, lastname text)");
+    $ionicPlatform.ready(function() {
+        // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
+        // for form inputs)
+        db = $cordovaSQLite.openDB({
+            name: "my.db",
+            location: 1
+        });
+        $cordovaSQLite.execute(db, "CREATE TABLE IF NOT EXISTS people (id integer primary key, firstname text, lastname text)");
+        $cordovaSQLite.execute(db, "CREATE TABLE IF NOT EXISTS rbcquestion (id INTEGER,date TEXT,recommendchapterid INTEGER,content TEXT, userid INTEGER)");
+        $cordovaSQLite.execute(db, "CREATE TABLE IF NOT EXISTS recommendbook (id INTEGER PRIMARY KEY,intro TEXT,courseid INTEGER)");
+        $cordovaSQLite.execute(db, "CREATE TABLE IF NOT EXISTS recommendchapter (id INTEGER PRIMARY KEY,name TEXT,start_page INTEGER,end_page INTEGER,recommendbookid INTEGER,finished INTEGER)");
+        $cordovaSQLite.execute(db, "CREATE TABLE IF NOT EXISTS rbcanswer (id INTEGER PRIMARY KEY,user_id INTEGER,content TEXT,date TEXT)");
+        $cordovaSQLite.execute(db, "CREATE TABLE IF NOT EXISTS course ( id INTEGER PRIMARY KEY, category INTEGER, fullname TEXT,shortname TEXT)");
 
-    if (window.cordova && window.cordova.plugins && window.cordova.plugins.Keyboard) {
-      cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
-      cordova.plugins.Keyboard.disableScroll(true);
-    }
-    if (window.StatusBar) {
-      // org.apache.cordova.statusbar required
-      StatusBar.styleDefault();
-    }
+        $cordovaSQLite.execute(db, "INSERT INTO course VALUES(1,1,'Database Systems','CS-3542')");
+        $cordovaSQLite.execute(db, "INSERT INTO course VALUES(2,1,'Database Structures','CS-3542')");
+        $cordovaSQLite.execute(db, "INSERT INTO course VALUES(3,1,'Algorithms','CS-3542')");
+        $cordovaSQLite.execute(db, "INSERT INTO course VALUES(4,1,'OS','CS-3542')");
+
+        if (window.cordova && window.cordova.plugins && window.cordova.plugins.Keyboard) {
+            cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
+            cordova.plugins.Keyboard.disableScroll(true);
+        }
+        if (window.StatusBar) {
+            // org.apache.cordova.statusbar required
+            StatusBar.styleDefault();
+        }
 
 
 
-  });
+    });
 });
