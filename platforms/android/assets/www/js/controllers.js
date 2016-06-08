@@ -1,6 +1,6 @@
 angular.module('app.controllers', [])
 
-.controller('rEADMoodleAssistanceCtrl', function($scope, $ionicPlatform, $cordovaLocalNotification) {
+.controller('rEADMoodleAssistanceCtrl', function($scope, $ionicPlatform, $cordovaLocalNotification, $cordovaSQLite) {
 
   // $ionicPlatform.ready(function(){
   //   $cordovaLocalNotification.add({message: 'Hello Local'});
@@ -19,21 +19,36 @@ angular.module('app.controllers', [])
   //   console.log('Notification 1 triggered');
   // });
 
-  $cordovaLocalNotification.schedule({
-    id: 1,
-    title: 'Warning',
-    text: "My Text!",
-    data: {
-      customProperty: 'custom value'
+  // $cordovaLocalNotification.schedule({
+  //   id: 1,
+  //   title: 'Warning',
+  //   text: "My Text!",
+  //   data: {
+  //     customProperty: 'custom value'
+  //   }
+  // }).then(function(result) {
+  //   console.log('Notification 1 triggered');
+  // });
+
+  $scope.people = [];
+  var query = "SELECT id,fullname,shortname FROM course";
+  $cordovaSQLite.execute(db, query, []).then(function(res) {
+    if (res.rows.length > 0) {
+      for (var i = 0; i < res.rows.length; i++) {
+        $scope.people.push({fullname :res.rows.item(i).fullname, shortname :res.rows.item(i).shortname, id :res.rows.item(i).id});
+      }
+    } else {
+      console.log("No results found");
     }
-  }).then(function(result) {
-    console.log('Notification 1 triggered');
+  }, function(err) {
+    console.error(err);
   });
 
 
 })
 
-.controller('recomenedChaptersCtrl', function($scope) {
+.controller('recomenedChaptersCtrl', function($scope,$stateParams) {
+  $scope.myName = $stateParams.id;
 
 })
 

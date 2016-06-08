@@ -21,7 +21,7 @@ angular.module('app.routes', [])
   })
 
   .state('menu.recomenedChapters', {
-    url: '/page2',
+    url: '/page2/:id',
     views: {
       'side-menu21': {
         templateUrl: 'templates/recomenedChapters.html',
