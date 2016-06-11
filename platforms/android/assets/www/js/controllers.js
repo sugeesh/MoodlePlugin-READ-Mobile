@@ -31,11 +31,11 @@ angular.module('app.controllers', [])
   // });
 
   $scope.people = [];
-  var query = "SELECT id,fullname,shortname FROM course";
+  var query = "SELECT id,fullname,shortname,date FROM course";
   $cordovaSQLite.execute(db, query, []).then(function(res) {
     if (res.rows.length > 0) {
       for (var i = 0; i < res.rows.length; i++) {
-        $scope.people.push({fullname :res.rows.item(i).fullname, shortname :res.rows.item(i).shortname, id :res.rows.item(i).id});
+        $scope.people.push({fullname :res.rows.item(i).fullname, shortname :res.rows.item(i).shortname, id :res.rows.item(i).id, date :res.rows.item(i).date});
       }
     } else {
       console.log("No results found");
@@ -47,8 +47,8 @@ angular.module('app.controllers', [])
 
 })
 
-.controller('recomenedChaptersCtrl', function($scope,$stateParams) {
-  $scope.myName = $stateParams.id;
+.controller('courseContentCtrl', function($scope,$stateParams) {
+  $scope.myName = $stateParams.date;
 
 })
 

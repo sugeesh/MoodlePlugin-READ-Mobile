@@ -20,12 +20,12 @@ angular.module('app.routes', [])
     }
   })
 
-  .state('menu.recomenedChapters', {
-    url: '/page2/:id',
+  .state('menu.courseContent', {
+    url: '/page2/:date',
     views: {
       'side-menu21': {
-        templateUrl: 'templates/recomenedChapters.html',
-        controller: 'recomenedChaptersCtrl'
+        templateUrl: 'templates/courseContent.html',
+        controller: 'courseContentCtrl'
       }
     }
   })
