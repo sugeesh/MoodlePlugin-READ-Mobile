@@ -1,10 +1,18 @@
 <ion-view style="" class=" " id="page3" title="Chapter 1">
     <ion-content class="has-header" padding="true">
-        <p class=" " style="color:#000000;" id="chapter1-markdown1">Book - Database Systems By Mark Rohan</p>
-        <p class=" " style="color:#000000;" id="chapter1-markdown1">From page 20 to 30</p>
-        <form class="list " id="chapter1-form2">
-            <ion-toggle class=" " name="read" id="chapter1-toggle1" toggle-class="toggle-balanced">Read</ion-toggle>
-        </form>
+        <h3>{{text}}</h3>
+        <ion-list class=" " id="rEADMoodleAssistance-list2">
+            <ion-item ng-repeat="chapter in data" id="rEADMoodleAssistance-list-item" class="item-thumbnail-left  ">
+                <img src="img/1qTd16eRIu9EPepdGtgc_book.jpg">
+                <h2>{{chapter.rbname}}</h2>
+                <h4>{{chapter.rcname}}</h4>
+                <p>Start Page : {{chapter.start_page}}</p>
+                <p>End Page : {{chapter.end_page}}</p>
+                <form class="list " id="chapter1-form2">
+                    <ion-toggle class="" name="read" id="chapter1-toggle1" ng-checked="{{chapter.finished}}" toggle-class="toggle-balanced">Finished</ion-toggle>
+                </form>
+            </ion-item>
+        </ion-list>
 
     </ion-content>
 </ion-view>

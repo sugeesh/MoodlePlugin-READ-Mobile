@@ -21,7 +21,7 @@ angular.module('app.routes', [])
   })
 
   .state('menu.courseContent', {
-    url: '/page2/:date',
+    url: '/page2/:date/:id',
     views: {
       'side-menu21': {
         templateUrl: 'templates/courseContent.html',
@@ -31,7 +31,7 @@ angular.module('app.routes', [])
   })
 
   .state('menu.chapter1', {
-    url: '/page3',
+    url: '/page3:courseId/:section',
     views: {
       'side-menu21': {
         templateUrl: 'templates/chapter1.html',

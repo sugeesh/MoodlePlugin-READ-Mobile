@@ -7,7 +7,7 @@
         <ion-list class=" " id="rEADMoodleAssistance-list2">
 
 
-            <ion-item ng-repeat="person in people" ui-sref="menu.courseContent({date:person.date})" id="rEADMoodleAssistance-list-item" class="item-thumbnail-left  ">
+            <ion-item ng-repeat="person in people" ui-sref="menu.courseContent({date:person.date,id:person.id})" id="rEADMoodleAssistance-list-item" class="item-thumbnail-left  ">
                 <img src="img/1qTd16eRIu9EPepdGtgc_book.jpg">
                 <h2>{{person.fullname}}</h2>
                 <p>{{person.shortname}}</p>

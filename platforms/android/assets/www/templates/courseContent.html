@@ -1,57 +1,58 @@
-<ion-view style="" class=" " id="page2" title="Course Content">
+<ion-view style="" class=" " id="page2" title="Course{{courseId}} Content">
     <ion-content class="has-header" padding="true">
         <ion-list class=" " id="courseContent-list4">
-            <ion-item style="" ui-sref="menu.chapter1" id="courseContent-list-item9" class="item-avatar item-icon-right  ">
-                <!-- <h2>2016-02-04 / 2016-02-11</h2> -->
-                <!-- <p>Chapter{{myName | date:'medium'}}</p> -->
 
-                <h4>{{myName * 1000 | date:'yyyy-MM-dd'}} to {{myName * 1000 + 7*24*60*60* 1000   | date:'yyyy-MM-dd'}}</h4>
-                <!-- <h2>{{chapter.name}}</h2>
-                <p>Chapter {{chapter.id}}</p> -->
+            <ion-item style="" ui-sref="menu.chapter1({courseId:courseId, section:0})" id="courseContent-list-item9" class="item-avatar item-icon-right  ">
+                <h4>Course Content</h4>
                 <i class="icon ion-android-arrow-dropright"></i>
             </ion-item>
 
-            <ion-item style="" ui-sref="menu.chapter1" id="courseContent-list-item9" class="item-avatar item-icon-right  ">
+            <ion-item style="" ui-sref="menu.chapter1({courseId:courseId, section:1})" id="courseContent-list-item9" class="item-avatar item-icon-right  ">
+                <h4>{{myName * 1000 | date:'yyyy-MM-dd'}} to {{myName * 1000 + 7*24*60*60* 1000   | date:'yyyy-MM-dd'}}</h4>
+                <i class="icon ion-android-arrow-dropright"></i>
+            </ion-item>
+
+            <ion-item style="" ui-sref="menu.chapter1({courseId:courseId, section:2})" id="courseContent-list-item9" class="item-avatar item-icon-right  ">
                 <h4>{{myName * 1000 + 7*24*60*60*1000| date:'yyyy-MM-dd'}} to {{myName * 1000 + 14*24*60*60* 1000   | date:'yyyy-MM-dd'}}</h4>
                 <i class="icon ion-android-arrow-dropright"></i>
             </ion-item>
 
-            <ion-item style="" ui-sref="menu.chapter1" id="courseContent-list-item9" class="item-avatar item-icon-right  ">
+            <ion-item style="" ui-sref="menu.chapter1({courseId:courseId, section:3})" id="courseContent-list-item9" class="item-avatar item-icon-right  ">
                 <h4>{{myName * 1000 + 14*24*60*60*1000| date:'yyyy-MM-dd'}} to {{myName * 1000 + 21*24*60*60* 1000   | date:'yyyy-MM-dd'}}</h4>
                 <i class="icon ion-android-arrow-dropright"></i>
             </ion-item>
 
-            <ion-item style="" ui-sref="menu.chapter1" id="courseContent-list-item9" class="item-avatar item-icon-right  ">
+            <ion-item style="" ui-sref="menu.chapter1({courseId:courseId, section:4})" id="courseContent-list-item9" class="item-avatar item-icon-right  ">
                 <h4>{{myName * 1000 + 21*24*60*60*1000| date:'yyyy-MM-dd'}} to {{myName * 1000 + 28*24*60*60* 1000   | date:'yyyy-MM-dd'}}</h4>
                 <i class="icon ion-android-arrow-dropright"></i>
             </ion-item>
 
-            <ion-item style="" ui-sref="menu.chapter1" id="courseContent-list-item9" class="item-avatar item-icon-right  ">
+            <ion-item style="" ui-sref="menu.chapter1({courseId:courseId, section:5})" id="courseContent-list-item9" class="item-avatar item-icon-right  ">
                 <h4>{{myName * 1000 + 28*24*60*60*1000| date:'yyyy-MM-dd'}} to {{myName * 1000 + 35*24*60*60* 1000   | date:'yyyy-MM-dd'}}</h4>
                 <i class="icon ion-android-arrow-dropright"></i>
             </ion-item>
 
-            <ion-item style="" ui-sref="menu.chapter1" id="courseContent-list-item9" class="item-avatar item-icon-right  ">
+            <ion-item style="" ui-sref="menu.chapter1({courseId:courseId, section:6})" id="courseContent-list-item9" class="item-avatar item-icon-right  ">
                 <h4>{{myName * 1000 + 35*24*60*60*1000| date:'yyyy-MM-dd'}} to {{myName * 1000 + 42*24*60*60* 1000   | date:'yyyy-MM-dd'}}</h4>
                 <i class="icon ion-android-arrow-dropright"></i>
             </ion-item>
 
-            <ion-item style="" ui-sref="menu.chapter1" id="courseContent-list-item9" class="item-avatar item-icon-right  ">
+            <ion-item style="" ui-sref="menu.chapter1({courseId:courseId, section:7})" id="courseContent-list-item9" class="item-avatar item-icon-right  ">
                 <h4>{{myName * 1000 + 42*24*60*60*1000| date:'yyyy-MM-dd'}} to {{myName * 1000 + 49*24*60*60* 1000   | date:'yyyy-MM-dd'}}</h4>
                 <i class="icon ion-android-arrow-dropright"></i>
             </ion-item>
 
-            <ion-item style="" ui-sref="menu.chapter1" id="courseContent-list-item9" class="item-avatar item-icon-right  ">
+            <ion-item style="" ui-sref="menu.chapter1({courseId:courseId, section:8})" id="courseContent-list-item9" class="item-avatar item-icon-right  ">
                 <h4>{{myName * 1000 + 49*24*60*60*1000| date:'yyyy-MM-dd'}} to {{myName * 1000 + 56*24*60*60* 1000   | date:'yyyy-MM-dd'}}</h4>
                 <i class="icon ion-android-arrow-dropright"></i>
             </ion-item>
 
-            <ion-item style="" ui-sref="menu.chapter1" id="courseContent-list-item9" class="item-avatar item-icon-right  ">
+            <ion-item style="" ui-sref="menu.chapter1({courseId:courseId, section:9})" id="courseContent-list-item9" class="item-avatar item-icon-right  ">
                 <h4>{{myName * 1000 + 56*24*60*60*1000| date:'yyyy-MM-dd'}} to {{myName * 1000 + 63*24*60*60* 1000   | date:'yyyy-MM-dd'}}</h4>
                 <i class="icon ion-android-arrow-dropright"></i>
             </ion-item>
 
-            <ion-item style="" ui-sref="menu.chapter1" id="courseContent-list-item9" class="item-avatar item-icon-right  ">
+            <ion-item style="" ui-sref="menu.chapter1({courseId:courseId, section:10})" id="courseContent-list-item9" class="item-avatar item-icon-right  ">
                 <h4>{{myName * 1000 + 63*24*60*60*1000| date:'yyyy-MM-dd'}} to {{myName * 1000 + 70*24*60*60* 1000   | date:'yyyy-MM-dd'}}</h4>
                 <i class="icon ion-android-arrow-dropright"></i>
             </ion-item>

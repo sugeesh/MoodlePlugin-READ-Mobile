@@ -49,10 +49,26 @@ angular.module('app.controllers', [])
 
 .controller('courseContentCtrl', function($scope,$stateParams) {
   $scope.myName = $stateParams.date;
+  $scope.courseId = $stateParams.id;
 
 })
 
-.controller('chapter1Ctrl', function($scope) {
+.controller('chapter1Ctrl', function($scope,$stateParams, $cordovaSQLite) {
+  $scope.data = [];
+  var query = "SELECT rc.name as rcname,rc.start_page,rc.end_page,rb.name as rbname,rc.finished FROM recommendbook rb, recommendchapter rc WHERE rc.recommendbookid = rb.id AND rb.courseid="+$stateParams.courseId+"  AND section="+$stateParams.section;
+  $cordovaSQLite.execute(db, query, []).then(function(res) {
+    if (res.rows.length > 0) {
+      for (var i = 0; i < res.rows.length; i++) {
+        $scope.data.push({rcname :res.rows.item(i).rcname, rbname :res.rows.item(i).rbname, start_page :res.rows.item(i).start_page, end_page :res.rows.item(i).end_page, finished :res.rows.item(i).finished});
+      }
+    } else {
+      $scope.text = "No resource added for this week";
+      console.log("No results found");
+    }
+  }, function(err) {
+    console.error(err);
+  });
+
 
 })
 
@@ -61,31 +77,31 @@ angular.module('app.controllers', [])
 });
 
 
-example.controller("ExampleController", function($scope, $cordovaSQLite, $ionicPlatform) {
-  $scope.insert = function(id,category,firstname, lastname) {
-    var query = "INSERT INTO course VALUES (?,?,?,?)";
-    $cordovaSQLite.execute(db, query, [id,category,firstname, lastname]).then(function(res) {
-      $scope.myName = "Id is " + res.insertId;
-    }, function(err) {
-      $scope.myName = err;
-    });
-
-  }
-
-  $scope.select = function(lastname) {
-    $scope.people = [];
-    var query = "SELECT fullname FROM course";
-    $cordovaSQLite.execute(db, query, []).then(function(res) {
-      if (res.rows.length > 0) {
-        for (var i = 0; i < res.rows.length; i++) {
-          $scope.people.push({firstname :res.rows.item(i).fullname});
-        }
-      } else {
-        console.log("No results found");
-      }
-    }, function(err) {
-      console.error(err);
-    });
-  }
-
-});
+// example.controller("ExampleController", function($scope, $cordovaSQLite, $ionicPlatform) {
+//   $scope.insert = function(id,category,firstname, lastname) {
+//     var query = "INSERT INTO course VALUES (?,?,?,?)";
+//     $cordovaSQLite.execute(db, query, [id,category,firstname, lastname]).then(function(res) {
+//       $scope.myName = "Id is " + res.insertId;
+//     }, function(err) {
+//       $scope.myName = err;
+//     });
+//
+//   }
+//
+//   $scope.select = function(lastname) {
+//     $scope.people = [];
+//     var query = "SELECT fullname FROM course";
+//     $cordovaSQLite.execute(db, query, []).then(function(res) {
+//       if (res.rows.length > 0) {
+//         for (var i = 0; i < res.rows.length; i++) {
+//           $scope.people.push({firstname :res.rows.item(i).fullname});
+//         }
+//       } else {
+//         console.log("No results found");
+//       }
+//     }, function(err) {
+//       console.error(err);
+//     });
+//   }
+//
+// });

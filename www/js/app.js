@@ -18,16 +18,23 @@ var example = angular.module('app', ['ionic', 'app.controllers', 'app.routes', '
             name: "my.db",
             location: 1
         });
-        $cordovaSQLite.execute(db, "CREATE TABLE IF NOT EXISTS rbcquestion (id INTEGER,date TEXT,recommendchapterid INTEGER,content TEXT, userid INTEGER)");
-        $cordovaSQLite.execute(db, "CREATE TABLE IF NOT EXISTS recommendbook (id INTEGER PRIMARY KEY,intro TEXT,courseid INTEGER)");
-        $cordovaSQLite.execute(db, "CREATE TABLE IF NOT EXISTS recommendchapter (id INTEGER PRIMARY KEY,name TEXT,start_page INTEGER,end_page INTEGER,recommendbookid INTEGER,finished INTEGER)");
-        $cordovaSQLite.execute(db, "CREATE TABLE IF NOT EXISTS rbcanswer (id INTEGER PRIMARY KEY,user_id INTEGER,content TEXT,date TEXT)");
+        // $cordovaSQLite.execute(db, "CREATE TABLE IF NOT EXISTS rbcquestion (id INTEGER,date TEXT,recommendchapterid INTEGER,content TEXT, userid INTEGER)");
+        $cordovaSQLite.execute(db, "CREATE TABLE IF NOT EXISTS recommendbook (id INTEGER PRIMARY KEY,name TEXT,courseid INTEGER)");
+        $cordovaSQLite.execute(db, "CREATE TABLE IF NOT EXISTS recommendchapter (id INTEGER PRIMARY KEY,name TEXT,start_page INTEGER,end_page INTEGER,section INTEGER,recommendbookid INTEGER,finished INTEGER)");
+        // $cordovaSQLite.execute(db, "CREATE TABLE IF NOT EXISTS rbcanswer (id INTEGER PRIMARY KEY,user_id INTEGER,content TEXT,date TEXT)");
         $cordovaSQLite.execute(db, "CREATE TABLE IF NOT EXISTS course ( id INTEGER PRIMARY KEY, category INTEGER, fullname TEXT,shortname TEXT, date INTEGER)");
 
         $cordovaSQLite.execute(db, "INSERT INTO course VALUES(1,1,'Database Systems','CS-3542',1465621314)");
         $cordovaSQLite.execute(db, "INSERT INTO course VALUES(2,1,'Database Structures','CS-3542',1465621314)");
         $cordovaSQLite.execute(db, "INSERT INTO course VALUES(3,1,'Algorithms','CS-3542',1465621314)");
         $cordovaSQLite.execute(db, "INSERT INTO course VALUES(4,1,'OS','CS-3542',1465621314)");
+
+        $cordovaSQLite.execute(db, "INSERT INTO recommendbook VALUES(1,'Database Systems',1)");
+        $cordovaSQLite.execute(db, "INSERT INTO recommendbook VALUES(2,'Database Systems 2',1)");
+
+        $cordovaSQLite.execute(db, "INSERT INTO recommendchapter VALUES(1,'Chapter 1',1,20,1,1,1)");
+        $cordovaSQLite.execute(db, "INSERT INTO recommendchapter VALUES(2,'Chapter 2',20,28,2,1,0)");
+        $cordovaSQLite.execute(db, "INSERT INTO recommendchapter VALUES(3,'Chapter 3',30,40,3,1,1)");
 
         if (window.cordova && window.cordova.plugins && window.cordova.plugins.Keyboard) {
             cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
