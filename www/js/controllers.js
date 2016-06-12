@@ -58,6 +58,16 @@ angular.module('app.controllers', [])
 
 })
 
+.controller('syncCtrl', function($scope, $stateParams, $http, $cordovaSQLite, $ionicHistory, $state, $window) {
+
+
+
+    // SyncSevice.syncwithServer().then(function(res){
+    //   $scope.title = res;
+    // });
+
+})
+
 .controller('chapter1Ctrl', function($scope, $stateParams, $cordovaSQLite) {
     $scope.data = [];
     var query = "SELECT rc.name as rcname,rb.id as rbid,rc.start_page,rc.section, rc.end_page,rb.name as rbname,rc.finished FROM recommendbook rb, recommendchapter rc WHERE rc.recommendbookid = rb.id AND rb.courseid=" + $stateParams.courseId + "  AND section=" + $stateParams.section;
@@ -92,20 +102,44 @@ angular.module('app.controllers', [])
 
 example.controller("finishedController", function($scope, $cordovaSQLite, $ionicPlatform) {
 
-    $scope.saveSettings = function(finished,section,rbid) {
+    $scope.saveSettings = function(finished, section, rbid) {
         $scope.finished = !$scope.finished;
         var a;
         if (finished == false) {
-          a = 0;
+            a = 0;
         } else {
-          a = 1;
+            a = 1;
         }
         var query = "UPDATE recommendchapter SET finished = ? WHERE section = ? AND recommendbookid=?";
-        $scope.myName = "Added"+a;
-        $cordovaSQLite.execute(db, query, [a, section, rbid]).then(function(res) {
-        }, function(err) {
+        $scope.myName = "Added" + a;
+        $cordovaSQLite.execute(db, query, [a, section, rbid]).then(function(res) {}, function(err) {
             $scope.myName = err;
         });
+    }
+})
+
+
+example.controller("syncController", function($scope, $stateParams, $http, $cordovaSQLite,$window) {
+
+    $scope.sync1 = function(server,name) {
+      // $http.get("http://drosx.com/a.php/mdl_course/0?getCourses=3").then(function(result) {
+        $http.get(server+"/a.php/mdl_course/0?getCourses="+name).then(function(result) {
+            var query = "DELETE FROM course";
+            $cordovaSQLite.execute(db, query);
+            var length = result.data.length;
+            if (length > 0) {
+                for (var i = 0; i < length; i++) {
+                    var courseId = result.data[i].courseId;
+                    var fullname = result.data[i].fullname;
+                    var shortname = result.data[i].shortname;
+                    var date = result.data[i].date;
+                    $cordovaSQLite.execute(db, "INSERT INTO course VALUES(?,?,?,?)", [courseId, fullname, shortname, date]);
+                }
+                $scope.title = "Database Synced";
+            }
+        }, function(err) {
+            $scope.title = res.data;
+        })
     }
 });
 

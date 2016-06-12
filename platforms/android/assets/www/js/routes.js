@@ -11,6 +11,7 @@ angular.module('app.routes', [])
 
 
       .state('menu.rEADMoodleAssistance', {
+    cache: false,
     url: '/page1',
     views: {
       'side-menu21': {
@@ -40,6 +41,16 @@ angular.module('app.routes', [])
     }
   })
 
+  .state('menu.sync', {
+    url: '/pageSync',
+    views: {
+      'side-menu21': {
+        templateUrl: 'templates/sync.html',
+        controller: 'syncCtrl'
+      }
+    }
+  })
+
   .state('menu', {
     url: '/side-menu21',
     templateUrl: 'templates/menu.html',
@@ -51,6 +62,7 @@ angular.module('app.routes', [])
     templateUrl: 'templates/login.html',
     controller: 'loginCtrl'
   })
+
 
 $urlRouterProvider.otherwise('/page4')
 

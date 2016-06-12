@@ -1,0 +1,29 @@
+<ion-view style="" class=" " id="pageSync" title="Sync With Server">
+    <ion-content class="has-header" padding="true" ng-controller="syncController">
+        <h4>Connect with your Moodle Server</h4>
+
+        <div class="list">
+            <label class="item item-input item-floating-label">
+                <span class="input-label">Moodle Server</span>
+                <input type="text" ng-model="server" placeholder="Server Name">
+            </label>
+            <label class="item item-input item-floating-label">
+                <span class="input-label">User Name</span>
+                <input type="text" ng-model="name" placeholder="User Name">
+            </label>
+            <label class="item item-input item-floating-label">
+                <span class="input-label">Password</span>
+                <input type="password" ng-model="password" placeholder="Password">
+            </label>
+
+            <label class="item item-input item-floating-label">
+                <button class="button button-full button-positive" type="button" ng-click="sync1(server,name)">
+                    Sync
+                </button>
+            </label>
+        </div>
+        <h2>{{title}}</h2>
+
+
+    </ion-content>
+</ion-view>
