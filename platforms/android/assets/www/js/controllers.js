@@ -70,7 +70,7 @@ angular.module('app.controllers', [])
 
 .controller('chapter1Ctrl', function($scope, $stateParams, $cordovaSQLite) {
     $scope.data = [];
-    var query = "SELECT rc.name as rcname,rb.id as rbid,rc.start_page,rc.section, rc.end_page,rb.name as rbname,rc.finished FROM recommendbook rb, recommendchapter rc WHERE rc.recommendbookid = rb.id AND rb.courseid=" + $stateParams.courseId + "  AND section=" + $stateParams.section;
+    var query = "SELECT rc.name as rcname,rb.id as rbid,rc.start_page,rc.section, rc.end_page,rb.name as rbname,rc.finished FROM recommendbook rb, recommendchapter rc WHERE rc.recommendbookid = rb.id AND rb.courseid=" + $stateParams.courseId + "  AND rc.section=" + $stateParams.section;
     $cordovaSQLite.execute(db, query, []).then(function(res) {
         if (res.rows.length > 0) {
             for (var i = 0; i < res.rows.length; i++) {
@@ -119,27 +119,62 @@ example.controller("finishedController", function($scope, $cordovaSQLite, $ionic
 })
 
 
-example.controller("syncController", function($scope, $stateParams, $http, $cordovaSQLite,$window) {
+example.controller("syncController", function($scope, $stateParams, $http, $cordovaSQLite, $window) {
+    $scope.server = "http://drosx.com";
+    $scope.name = "student1";
 
-    $scope.sync1 = function(server,name) {
-      // $http.get("http://drosx.com/a.php/mdl_course/0?getCourses=3").then(function(result) {
-        $http.get(server+"/a.php/mdl_course/0?getCourses="+name).then(function(result) {
-            var query = "DELETE FROM course";
-            $cordovaSQLite.execute(db, query);
-            var length = result.data.length;
-            if (length > 0) {
-                for (var i = 0; i < length; i++) {
-                    var courseId = result.data[i].courseId;
-                    var fullname = result.data[i].fullname;
-                    var shortname = result.data[i].shortname;
-                    var date = result.data[i].date;
-                    $cordovaSQLite.execute(db, "INSERT INTO course VALUES(?,?,?,?)", [courseId, fullname, shortname, date]);
+    $scope.sync1 = function(server, name) {
+        $http.get(server + "/a.php/mdl_course/0?getCourses=" + name).then(function(result) {
+                var query = "DELETE FROM course";
+                $cordovaSQLite.execute(db, query);
+                query = "DELETE FROM recommendbook";
+                $cordovaSQLite.execute(db, query)
+                query = "DELETE FROM recommendchapter";
+                $cordovaSQLite.execute(db, query)
+                var length = result.data.length;
+                if (length > 0) {
+                    for (var i = 0; i < length; i++) {
+                        var courseId = result.data[i].courseId;
+                        var fullname = result.data[i].fullname;
+                        var shortname = result.data[i].shortname;
+                        var date = result.data[i].date;
+                        $cordovaSQLite.execute(db, "INSERT INTO course VALUES(?,?,?,?)", [courseId, fullname, shortname, date]);
+                        $http.get(server + "/a.php/mdl_course/0?getBooks=" + courseId).then(function(result2) {
+                            var length2 = result2.data.length;
+                            if (length2 > 0) {
+                                for (var i = 0; i < length2; i++) {
+                                    var rbid = result2.data[i].id;
+                                    var name = result2.data[i].name;
+                                    var sectionid = result2.data[i].section;
+                                    $cordovaSQLite.execute(db, "INSERT INTO recommendbook VALUES(?,?,?,?)", [rbid, name, courseId,sectionid]);
+                                    // $cordovaSQLite.execute(db, "INSERT INTO recommendbook VALUES(1,'Database Systems',5,1)");
+                                }
+                            }
+                        })
+                        $http.get(server + "/a.php/mdl_course/0?getChapters=" + courseId).then(function(result3) {
+                            var length3 = result3.data.length;
+                            if (length3 > 0) {
+                                for (var i = 0; i < length3; i++) {
+                                    var rcid = result3.data[i].id;
+                                    var name = result3.data[i].name;
+                                    var start_page = result3.data[i].start_page;
+                                    var end_page = result3.data[i].end_page;
+                                    var rbid = result3.data[i].recommend_book_id;
+                                    var section = result3.data[i].section;
+                                    $cordovaSQLite.execute(db, "INSERT INTO recommendchapter VALUES(?,?,?,?,?,?,0)", [rcid, name, start_page,end_page,section,rbid]);
+                                    $scope.title = "Database Synced";
+                                }
+                            }
+                        })
+                    }
+                    // $scope.title = "Database Synced";
+                } else {
+                    $scope.title = "Error. Wrong url, username or password";
                 }
-                $scope.title = "Database Synced";
-            }
-        }, function(err) {
-            $scope.title = res.data;
-        })
+            },
+            function(err) {
+                $scope.title = err;
+            })
     }
 });
 

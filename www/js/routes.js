@@ -42,6 +42,7 @@ angular.module('app.routes', [])
   })
 
   .state('menu.sync', {
+    cache: false,
     url: '/pageSync',
     views: {
       'side-menu21': {

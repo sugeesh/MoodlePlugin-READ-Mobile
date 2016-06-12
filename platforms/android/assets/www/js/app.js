@@ -19,7 +19,7 @@ var example = angular.module('app', ['ionic', 'app.controllers', 'app.routes', '
             location: 1
         });
         // $cordovaSQLite.execute(db, "CREATE TABLE IF NOT EXISTS rbcquestion (id INTEGER,date TEXT,recommendchapterid INTEGER,content TEXT, userid INTEGER)");
-        $cordovaSQLite.execute(db, "CREATE TABLE IF NOT EXISTS recommendbook (id INTEGER PRIMARY KEY,name TEXT,courseid INTEGER)");
+        $cordovaSQLite.execute(db, "CREATE TABLE IF NOT EXISTS recommendbook (id INTEGER PRIMARY KEY,name TEXT,courseid INTEGER,section INTEGER)");
         $cordovaSQLite.execute(db, "CREATE TABLE IF NOT EXISTS recommendchapter (id INTEGER PRIMARY KEY,name TEXT,start_page INTEGER,end_page INTEGER,section INTEGER,recommendbookid INTEGER,finished INTEGER)");
         // $cordovaSQLite.execute(db, "CREATE TABLE IF NOT EXISTS rbcanswer (id INTEGER PRIMARY KEY,user_id INTEGER,content TEXT,date TEXT)");
         $cordovaSQLite.execute(db, "CREATE TABLE IF NOT EXISTS course ( id INTEGER PRIMARY KEY,fullname TEXT,shortname TEXT, date INTEGER)");
