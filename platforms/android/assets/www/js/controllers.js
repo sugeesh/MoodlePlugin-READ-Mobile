@@ -124,7 +124,23 @@ example.controller("syncController", function($scope, $stateParams, $http, $cord
     $scope.name = "student1";
 
     $scope.sync1 = function(server, name) {
+
         $http.get(server + "/a.php/mdl_course/0?getCourses=" + name).then(function(result) {
+                var finisheddata = [];
+                var query = "SELECT id FROM recommendchapter WHERE finished = 1";
+                $cordovaSQLite.execute(db, query, []).then(function(res) {
+                    if (res.rows.length > 0) {
+                        for (var i = 0; i < res.rows.length; i++) {
+                            finisheddata.push(res.rows.item(i).id);
+                        }
+
+                    } else {
+                        $scope.title1 = finisheddata;
+                    }
+                }, function(err) {
+                    console.error(err);
+                });
+
                 var query = "DELETE FROM course";
                 $cordovaSQLite.execute(db, query);
                 query = "DELETE FROM recommendbook";
@@ -146,7 +162,7 @@ example.controller("syncController", function($scope, $stateParams, $http, $cord
                                     var rbid = result2.data[i].id;
                                     var name = result2.data[i].name;
                                     var sectionid = result2.data[i].section;
-                                    $cordovaSQLite.execute(db, "INSERT INTO recommendbook VALUES(?,?,?,?)", [rbid, name, courseId,sectionid]);
+                                    $cordovaSQLite.execute(db, "INSERT INTO recommendbook VALUES(?,?,?,?)", [rbid, name, courseId, sectionid]);
                                     // $cordovaSQLite.execute(db, "INSERT INTO recommendbook VALUES(1,'Database Systems',5,1)");
                                 }
                             }
@@ -161,7 +177,11 @@ example.controller("syncController", function($scope, $stateParams, $http, $cord
                                     var end_page = result3.data[i].end_page;
                                     var rbid = result3.data[i].recommend_book_id;
                                     var section = result3.data[i].section;
-                                    $cordovaSQLite.execute(db, "INSERT INTO recommendchapter VALUES(?,?,?,?,?,?,0)", [rcid, name, start_page,end_page,section,rbid]);
+                                    var finished = 0;
+                                    if (finisheddata.indexOf(Number(rcid)) != -1) {
+                                        finished = 1;
+                                    }
+                                    $cordovaSQLite.execute(db, "INSERT INTO recommendchapter VALUES(?,?,?,?,?,?,?)", [rcid, name, start_page, end_page, section, rbid, finished]);
                                     $scope.title = "Database Synced";
                                 }
                             }
