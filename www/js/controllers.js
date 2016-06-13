@@ -100,6 +100,37 @@ angular.module('app.controllers', [])
 
 })
 
+.controller('missedChaptersCtrl', function($scope, $stateParams, $cordovaSQLite) {
+    $scope.data = [];
+    var query = "SELECT rc.name as rcname,c.fullname as coursename, rb.id as rbid,rc.start_page,rc.section, rc.end_page,rb.name as rbname,rc.finished FROM recommendbook rb, recommendchapter rc , course c WHERE rc.recommendbookid = rb.id AND c.id=rb.courseid AND rc.finished=0 ";
+    " rb.courseid=" + $stateParams.courseId + "  AND rc.section=" + $stateParams.section;
+    $cordovaSQLite.execute(db, query, []).then(function(res) {
+        if (res.rows.length > 0) {
+            for (var i = 0; i < res.rows.length; i++) {
+                $scope.data.push({
+                    id: res.rows.item(i).id,
+                    coursename: res.rows.item(i).coursename,
+                    rcname: res.rows.item(i).rcname,
+                    rbid: res.rows.item(i).rbid,
+                    section: res.rows.item(i).section,
+                    rbname: res.rows.item(i).rbname,
+                    start_page: res.rows.item(i).start_page,
+                    end_page: res.rows.item(i).end_page,
+                    finished: res.rows.item(i).finished
+                });
+            }
+        } else {
+            $scope.text = "No resource added for this week";
+            console.log("No results found");
+        }
+    }, function(err) {
+        console.error(err);
+    });
+
+
+})
+
+
 example.controller("finishedController", function($scope, $cordovaSQLite, $ionicPlatform) {
 
     $scope.saveSettings = function(finished, section, rbid) {
@@ -134,8 +165,6 @@ example.controller("syncController", function($scope, $stateParams, $http, $cord
                             finisheddata.push(res.rows.item(i).id);
                         }
 
-                    } else {
-                        $scope.title1 = finisheddata;
                     }
                 }, function(err) {
                     console.error(err);
@@ -154,14 +183,20 @@ example.controller("syncController", function($scope, $stateParams, $http, $cord
                         var fullname = result.data[i].fullname;
                         var shortname = result.data[i].shortname;
                         var date = result.data[i].date;
+
                         $cordovaSQLite.execute(db, "INSERT INTO course VALUES(?,?,?,?)", [courseId, fullname, shortname, date]);
                         $http.get(server + "/a.php/mdl_course/0?getBooks=" + courseId).then(function(result2) {
                             var length2 = result2.data.length;
                             if (length2 > 0) {
-                                for (var i = 0; i < length2; i++) {
-                                    var rbid = result2.data[i].id;
-                                    var name = result2.data[i].name;
-                                    var sectionid = result2.data[i].section;
+                                for (var j = 0; j < length2; j++) {
+                                    var rbid = result2.data[j].id;
+                                    var name = result2.data[j].name;
+                                    var sectionid = result2.data[j].section;
+
+                                    // $scope.title = courseId+" "+length2;
+                                    if(i==0){
+                                      $scope.title = rbid+" "+name+" "+courseId+" "+sectionid;
+                                    }
                                     $cordovaSQLite.execute(db, "INSERT INTO recommendbook VALUES(?,?,?,?)", [rbid, name, courseId, sectionid]);
                                     // $cordovaSQLite.execute(db, "INSERT INTO recommendbook VALUES(1,'Database Systems',5,1)");
                                 }
@@ -170,24 +205,24 @@ example.controller("syncController", function($scope, $stateParams, $http, $cord
                         $http.get(server + "/a.php/mdl_course/0?getChapters=" + courseId).then(function(result3) {
                             var length3 = result3.data.length;
                             if (length3 > 0) {
-                                for (var i = 0; i < length3; i++) {
-                                    var rcid = result3.data[i].id;
-                                    var name = result3.data[i].name;
-                                    var start_page = result3.data[i].start_page;
-                                    var end_page = result3.data[i].end_page;
-                                    var rbid = result3.data[i].recommend_book_id;
-                                    var section = result3.data[i].section;
+                                for (var j = 0; j < length3; j++) {
+                                    var rcid = result3.data[j].id;
+                                    var name = result3.data[j].name;
+                                    var start_page = result3.data[j].start_page;
+                                    var end_page = result3.data[j].end_page;
+                                    var rbid = result3.data[j].recommend_book_id;
+                                    var section = result3.data[j].section;
                                     var finished = 0;
                                     if (finisheddata.indexOf(Number(rcid)) != -1) {
                                         finished = 1;
                                     }
                                     $cordovaSQLite.execute(db, "INSERT INTO recommendchapter VALUES(?,?,?,?,?,?,?)", [rcid, name, start_page, end_page, section, rbid, finished]);
-                                    $scope.title = "Database Synced";
+                                    // $scope.title = "Database Synced";
                                 }
                             }
                         })
                     }
-                    // $scope.title = "Database Synced";
+                    $scope.title = "Database Synced";
                 } else {
                     $scope.title = "Error. Wrong url, username or password";
                 }

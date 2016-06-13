@@ -52,6 +52,18 @@ angular.module('app.routes', [])
     }
   })
 
+  .state('menu.missedChapters', {
+    cache: false,
+    url: '/pageMissedChapters',
+    views: {
+      'side-menu21': {
+        templateUrl: 'templates/missedChapters.html',
+        controller: 'missedChaptersCtrl'
+      }
+    }
+  })
+
+
   .state('menu', {
     url: '/side-menu21',
     templateUrl: 'templates/menu.html',
